@@ -1,27 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "./layout/layout.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% if title %}
-    <title>Flasky Blogger|{{title}}</title>
-    {% else %}
-    <title>Flasky Blogger|Home</title>
-    {% endif %}
-</head>
-
-<body>
-    {% for post in data %}
-    <div>
-        <h1>{{post.title}}</h1>
-        <p>[{{post.date}}]</p>
-    </div>
-
-    <p>{{post.content}}</p>
-    <code>- {{post.author}}</code>
-    {% endfor %}
-</body>
-
-</html>
+    {% block content %}
+        {% for post in data %}
+            <div>
+                <h1>{{post.title}}</h1>
+                <p>[{{post.date}}]</p>
+            </div>
+            
+            <p>{{post.content}}</p>
+            <code>- {{post.author}}</code>
+        {% endfor %}
+    {% endblock content %}
+<!-- 
+    jinja2 alows you to name the block, 
+    when you are ending the block.
+    This helps to be more explicit to which block you are trying to end
+ -->
