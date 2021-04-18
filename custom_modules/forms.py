@@ -14,11 +14,11 @@ class RegistrationForm(FlaskForm):
                             DataRequired(),
                             Email()
                         ])
-    password = StringField('Password',
+    password = PasswordField('Password',
                            validators=[
                                DataRequired(),
                            ])
-    confirm_password = StringField('Re-type Password',
+    confirm_password = PasswordField('Re-type Password',
                                    validators=[
                                        DataRequired(),
                                        EqualTo('password')
@@ -32,7 +32,7 @@ class LoginForm(FlaskForm):
                             DataRequired(),
                             Email()
                         ])
-    password = StringField('Password',
+    password = PasswordField('Password',
                            validators=[
                                DataRequired(),
                            ])

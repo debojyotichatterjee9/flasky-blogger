@@ -46,6 +46,16 @@
     <main role="main" class="container">
         <div class="row">
             <div class="col-md-8">
+                {% with flash_messages=get_flashed_messages(with_categories=true) %}
+                    {% if flash_messages %}
+                        {% for category, message in flash_messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div> 
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
                 {% block content %}{% endblock %}
             </div>
             <div class="col-md-4">
