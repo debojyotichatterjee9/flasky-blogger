@@ -45,9 +45,12 @@ def register():
         return redirect(url_for('home'))
     return render_template('./register/register.html', title='Registration', form=reg_form)
 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
     login_form = LoginForm()
+    if login_form.validate_on_submit():
+        flash(f'Welcome {login_form.email.data}!', 'success')
+        return redirect(url_for('home'))
     return render_template('./login/login.html', title='Login', form=login_form)
 
 # if running this file directly using python then the below condition is true
