@@ -49,8 +49,11 @@ def register():
 def login():
     login_form = LoginForm()
     if login_form.validate_on_submit():
-        flash(f'Welcome {login_form.email.data}!', 'success')
-        return redirect(url_for('home'))
+        if login_form.email.data == 'admin@admin.com' and login_form.password.data == 'password':
+            flash(f'Welcome {login_form.email.data}!', 'success')
+            return redirect(url_for('home'))
+        else:
+            flash(f'Please check the email or password!', 'danger')
     return render_template('./login/login.html', title='Login', form=login_form)
 
 # if running this file directly using python then the below condition is true
