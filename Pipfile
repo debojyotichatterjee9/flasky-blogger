@@ -7,6 +7,7 @@ name = "pypi"
 flask = "*"
 flask-wtf = "*"
 wtforms = {extras = ["email"], version = "*"}
+flask-sqlalchemy = "*"
 
 [dev-packages]
 autopep8 = "*"

@@ -4,6 +4,16 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 
 class RegistrationForm(FlaskForm):
+    first_name = StringField('First Name',
+                             validators=[
+                                 DataRequired(),
+                                 Length(min=2, max=20)
+                             ])
+    last_name = StringField('Last Name',
+                            validators=[
+                                DataRequired(),
+                                Length(min=2, max=20)
+                            ])
     username = StringField('Username',
                            validators=[
                                DataRequired(),
@@ -15,14 +25,14 @@ class RegistrationForm(FlaskForm):
                             Email()
                         ])
     password = PasswordField('Password',
-                           validators=[
-                               DataRequired(),
-                           ])
+                             validators=[
+                                 DataRequired(),
+                             ])
     confirm_password = PasswordField('Re-type Password',
-                                   validators=[
-                                       DataRequired(),
-                                       EqualTo('password')
-                                   ])
+                                     validators=[
+                                         DataRequired(),
+                                         EqualTo('password')
+                                     ])
     submit = SubmitField('Register')
 
 
@@ -33,8 +43,8 @@ class LoginForm(FlaskForm):
                             Email()
                         ])
     password = PasswordField('Password',
-                           validators=[
-                               DataRequired(),
-                           ])
+                             validators=[
+                                 DataRequired(),
+                             ])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
