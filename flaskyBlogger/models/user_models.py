@@ -1,8 +1,13 @@
-from flaskyBlogger import db
+from flaskyBlogger import db, login_manager
 from datetime import datetime
+from flask_login import UserMixin
 
 
-class User(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(20), nullable=True)
@@ -14,4 +19,4 @@ class User(db.Model):
 
     # dunder method or magic method
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.avatar}')"
+        return f"User('{self.first_name}, {self.last_name}, {self.username}', '{self.email}', '{self.avatar}')"
