@@ -17,6 +17,6 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
 
-    # dunder method or magic method
+    # dunder method or called magic method
     def __repr__(self):
         return f"User('{self.first_name}, {self.last_name}, {self.username}', '{self.email}', '{self.avatar}')"
