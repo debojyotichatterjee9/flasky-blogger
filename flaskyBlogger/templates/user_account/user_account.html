@@ -1,0 +1,35 @@
+{% extends "./layout/layout.html" %}
+
+    {% block content %}
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Field</th>
+      <th scope="col">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">First Name: </th>
+      <td>{{current_user.first_name}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Last Name: </th>
+      <td>{{current_user.last_name}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Username: </th>
+      <td>{{current_user.username}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Email: </th>
+      <td>{{current_user.email}}</td>
+    </tr>
+  </tbody>
+</table>
+    {% endblock content %}
+<!-- 
+    jinja2 alows you to name the block, 
+    when you are ending the block.
+    This helps to be more explicit to which block you are trying to end
+ -->

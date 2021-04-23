@@ -3,7 +3,7 @@ from flask import render_template, url_for, redirect, flash
 from flaskyBlogger.custom_modules.forms import RegistrationForm, LoginForm
 from flaskyBlogger.models.user_models import User
 from flaskyBlogger.models.post_models import Post
-from flask_login import login_user, current_user
+from flask_login import login_user, current_user, login_required, logout_user
 
 
 dummy_data = [
@@ -82,3 +82,15 @@ def login():
         else:
             flash(f'Please check the email or password!', 'danger')
     return render_template('./login/login.html', title='Login', form=login_form)
+
+
+@app.route('/logout', methods=["GET"])
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+
+@app.route('/user-account', methods=["GET"])
+@login_required
+def user_account():
+    return render_template('./user_account/user_account.html', title='User Account')
