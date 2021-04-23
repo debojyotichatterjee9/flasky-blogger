@@ -3,7 +3,7 @@ from flask import render_template, url_for, redirect, flash
 from flaskyBlogger.custom_modules.forms import RegistrationForm, LoginForm
 from flaskyBlogger.models.user_models import User
 from flaskyBlogger.models.post_models import Post
-from flask_login import login_user
+from flask_login import login_user, current_user
 
 
 dummy_data = [
@@ -39,6 +39,10 @@ def about():
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
+
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
     reg_form = RegistrationForm()
     if reg_form.validate_on_submit():
 
@@ -64,6 +68,10 @@ def register():
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
+    
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
     login_form = LoginForm()
     if login_form.validate_on_submit():
         user = User.query.filter_by(email = login_form.email.data).first()
