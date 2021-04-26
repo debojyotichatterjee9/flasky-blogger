@@ -1,6 +1,6 @@
 from flaskyBlogger import app, db, bcrypt
 from flask import render_template, url_for, redirect, flash, request
-from flaskyBlogger.custom_modules.forms import RegistrationForm, LoginForm
+from flaskyBlogger.custom_modules.forms import RegistrationForm, LoginForm, AccountUpdateForm
 from flaskyBlogger.models.user_models import User
 from flaskyBlogger.models.post_models import Post
 from flask_login import login_user, current_user, login_required, logout_user
@@ -80,7 +80,7 @@ def login():
 
             # checking if a param exists for a existing secured page in the application
             next_page = request.args.get('next')
-            
+
             flash(f'Welcome {login_form.email.data}!', 'success')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
@@ -94,7 +94,22 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/user-account', methods=["GET"])
+@app.route('/user-account', methods=["GET", "POST"])
 @login_required
 def user_account():
-    return render_template('./user_account/user_account.html', title='User Account')
+    user_avatar = url_for('static',filename='images/avatars/' + current_user.avatar)
+    account_update_form = AccountUpdateForm()
+    if account_update_form.validate_on_submit():
+        current_user.first_name = account_update_form.first_name.data
+        current_user.last_name = account_update_form.last_name.data
+        current_user.username = account_update_form.username.data
+        current_user.email = account_update_form.email.data
+        db.session.commit()
+        flash('Updated sucessfully!', 'success')
+        return redirect(url_for('user_account'))
+    elif request.method == "GET":
+        account_update_form.first_name.data = current_user.first_name
+        account_update_form.last_name.data = current_user.last_name
+        account_update_form.username.data = current_user.username
+        account_update_form.email.data = current_user.email
+    return render_template('./user_account/user_account.html', title='User Account', avatar=user_avatar, form=account_update_form)

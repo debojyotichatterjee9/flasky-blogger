@@ -1,32 +1,88 @@
 {% extends "./layout/layout.html" %}
 
     {% block content %}
-        <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Field</th>
-      <th scope="col">Value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">First Name: </th>
-      <td>{{current_user.first_name}}</td>
-    </tr>
-    <tr>
-      <th scope="row">Last Name: </th>
-      <td>{{current_user.last_name}}</td>
-    </tr>
-    <tr>
-      <th scope="row">Username: </th>
-      <td>{{current_user.username}}</td>
-    </tr>
-    <tr>
-      <th scope="row">Email: </th>
-      <td>{{current_user.email}}</td>
-    </tr>
-  </tbody>
-</table>
+   <div class="content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ avatar }}" />
+        <div class="media-body">
+          <h2 class="account-heading">{{ current_user.first_name }} {{ current_user.last_name }} ({{ current_user.username }})</h2>
+          <p class="text-secondary">{{ current_user.email }}</p>
+        </div>
+      </div>
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Account Info</legend>
+                <div class="d-flex justify-content-between mb-4">
+                <!-- FIRST NAME -->
+                <div class="form-group">
+                    {{ form.first_name.label(class="form-control-label") }}
+
+                    {% if form.first_name.errors %}
+                        {{ form.first_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.first_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.first_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <!-- LAST NAME -->
+                <div class="form-group">
+                    {{ form.last_name.label(class="form-control-label") }}
+
+                    {% if form.last_name.errors %}
+                        {{ form.last_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.last_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.last_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                </div>
+                <div class="d-flex justify-content-between mb-4">
+                <!-- USERNAME -->
+                <div class="form-group">
+                    {{ form.username.label(class="form-control-label") }}
+
+                    {% if form.username.errors %}
+                        {{ form.username(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.username.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.username(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <!-- EMAIL -->
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </div>
+                
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-primary") }}
+            </div>
+        </form>
+    </div>
     {% endblock content %}
 <!-- 
     jinja2 alows you to name the block, 
