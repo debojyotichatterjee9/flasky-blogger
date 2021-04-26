@@ -1,5 +1,5 @@
 from flaskyBlogger import app, db, bcrypt
-from flask import render_template, url_for, redirect, flash
+from flask import render_template, url_for, redirect, flash, request
 from flaskyBlogger.custom_modules.forms import RegistrationForm, LoginForm
 from flaskyBlogger.models.user_models import User
 from flaskyBlogger.models.post_models import Post
@@ -77,8 +77,12 @@ def login():
         user = User.query.filter_by(email = login_form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, login_form.password.data):
             login_user(user, remember=login_form.remember.data)
+
+            # checking if a param exists for a existing secured page in the application
+            next_page = request.args.get('next')
+            
             flash(f'Welcome {login_form.email.data}!', 'success')
-            return redirect(url_for('home'))
+            return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash(f'Please check the email or password!', 'danger')
     return render_template('./login/login.html', title='Login', form=login_form)
