@@ -101,14 +101,12 @@ def upload_avatar(image_data):
     _, file_ext = os.path.splitext(image_data.filename)
     file_name = random_hex + file_ext
     avatar_path = os.path.join(app.root_path, "static/images/avatars", file_name)
-    print(avatar_path)
     image_data.save(avatar_path)
-    return avatar_path
+    return file_name
 
 @app.route('/user-account', methods=["GET", "POST"])
 @login_required
 def user_account():
-    user_avatar = url_for('static',filename='images/avatars/' + current_user.avatar)
     account_update_form = AccountUpdateForm()
     if account_update_form.validate_on_submit():
         if account_update_form.avatar.data:
@@ -126,4 +124,5 @@ def user_account():
         account_update_form.last_name.data = current_user.last_name
         account_update_form.username.data = current_user.username
         account_update_form.email.data = current_user.email
+    user_avatar = url_for('static',filename='images/avatars/' + current_user.avatar)
     return render_template('./user_account/user_account.html', title='User Account', avatar=user_avatar, form=account_update_form)
