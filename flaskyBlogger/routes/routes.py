@@ -1,3 +1,5 @@
+import secrets
+import os
 from flaskyBlogger import app, db, bcrypt
 from flask import render_template, url_for, redirect, flash, request
 from flaskyBlogger.custom_modules.forms import RegistrationForm, LoginForm, AccountUpdateForm
@@ -94,12 +96,24 @@ def logout():
     return redirect(url_for('login'))
 
 
+def upload_avatar(image_data):
+    random_hex = secrets.token_hex(8)
+    _, file_ext = os.path.splitext(image_data.filename)
+    file_name = random_hex + file_ext
+    avatar_path = os.path.join(app.root_path, "static/images/avatars", file_name)
+    print(avatar_path)
+    image_data.save(avatar_path)
+    return avatar_path
+
 @app.route('/user-account', methods=["GET", "POST"])
 @login_required
 def user_account():
     user_avatar = url_for('static',filename='images/avatars/' + current_user.avatar)
     account_update_form = AccountUpdateForm()
     if account_update_form.validate_on_submit():
+        if account_update_form.avatar.data:
+            avatar_file = upload_avatar(account_update_form.avatar.data)
+            current_user.avatar = avatar_file 
         current_user.first_name = account_update_form.first_name.data
         current_user.last_name = account_update_form.last_name.data
         current_user.username = account_update_form.username.data

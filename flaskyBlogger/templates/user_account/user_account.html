@@ -76,9 +76,19 @@
                     {% endif %}
                 </div>
             </div>
-                
+            <div class="d-flex justify-content-between mb-4">
+                <div class="form-group">
+                    {{ form.avatar.label() }}</br>
+                    {{ form.avatar(class="form-control-file") }}
+                    {% if form.avatar.errors %}
+                        {% for error in form.avatar.errors %}
+                            </br><span class="text-danger">{{ error }}</span></br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
             </fieldset>
-            <div class="form-group">
+            <div class="form-group mt-4">
                 {{ form.submit(class="btn btn-outline-primary") }}
             </div>
         </form>
