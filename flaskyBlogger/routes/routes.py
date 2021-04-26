@@ -1,5 +1,6 @@
 import secrets
 import os
+from PIL import Image
 from flaskyBlogger import app, db, bcrypt
 from flask import render_template, url_for, redirect, flash, request
 from flaskyBlogger.custom_modules.forms import RegistrationForm, LoginForm, AccountUpdateForm
@@ -101,7 +102,13 @@ def upload_avatar(image_data):
     _, file_ext = os.path.splitext(image_data.filename)
     file_name = random_hex + file_ext
     avatar_path = os.path.join(app.root_path, "static/images/avatars", file_name)
-    image_data.save(avatar_path)
+
+    # resizing image
+    output_size = (125,125)
+    i = Image.open(image_data)
+    i.thumbnail(output_size)
+
+    i.save(avatar_path)
     return file_name
 
 @app.route('/user-account', methods=["GET", "POST"])
