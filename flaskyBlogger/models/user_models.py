@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
 
     def generate_token(self, exp_in_secs=1800):
         s = TJSONSerializer(app.config['SECRET_KEY'], exp_in_secs)
-        token = s.dumps({'user_id': se;f.id}).decode('utf-8')
+        token = s.dumps({'user_id': self.id}).decode('utf-8')
         return token
 
     @staticmethod

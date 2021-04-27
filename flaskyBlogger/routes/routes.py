@@ -3,7 +3,8 @@ import os
 from PIL import Image
 from flaskyBlogger import app, db, bcrypt
 from flask import render_template, url_for, redirect, flash, request, abort
-from flaskyBlogger.custom_modules.forms import RegistrationForm, LoginForm, AccountUpdateForm, EditPostForm
+from flaskyBlogger.custom_modules.forms import (RegistrationForm, LoginForm, AccountUpdateForm, 
+                                                EditPostForm, PasswordResetRequestForm, PasswordResetForm)
 from flaskyBlogger.models.user_models import User
 from flaskyBlogger.models.post_models import Post
 from flask_login import login_user, current_user, login_required, logout_user
@@ -204,4 +205,16 @@ def user_posts(username):
     list_of_posts = Post.query.filter_by(author=user_info).\
         order_by(Post.date.desc()).\
         paginate(page=requested_page, per_page=2)
-    return render_template('./post/user_posts.html', posts=list_of_posts, user=user_info)
+    return render_template('./post/user_posts.html', title=f"{user_info.first_name}'s Posts", posts=list_of_posts, user=user_info)
+
+
+
+@app.route('/reset-request', methods=["GET", "POST"])
+def reset_request():
+    #  redirect to home if logged in
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
+    password_reset_form = PasswordResetRequestForm()
+
+    return render_template('./user_account/password_reset_request.html', title="Reset Request", form=password_reset_form)
