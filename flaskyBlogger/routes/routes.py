@@ -29,15 +29,17 @@ dummy_data = [
 
 @app.route('/')
 def landing():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     return render_template('./landing/landing.html')
 
 
 @app.route('/home')
 @login_required
 def home():
-    list_of_posts = Post.query.all()
-    print(list_of_posts)
-    return render_template('./home/home.html', data=list_of_posts)
+    requested_page = request.args.get('page', 1, type=int)
+    list_of_posts = Post.query.paginate(page=requested_page, per_page=2)
+    return render_template('./home/home.html', posts=list_of_posts)
 
 # about page
 
@@ -184,4 +186,10 @@ def update_post(post_id):
 @app.route('/post/<int:post_id>/delete', methods=["GET", "POST"])
 @login_required
 def delete_post(post_id):
-    return None
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash(f'{post.title} deleted successfully!', 'danger')
+    return redirect(url_for('home'))

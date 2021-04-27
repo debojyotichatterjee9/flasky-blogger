@@ -1,3 +1,4 @@
 Pipfile.lock
-/flaskyBlogger/site.db
+# /flaskyBlogger/site.db
 flaskyBlogger/site.db
+flaskyBlogger/static/images/avatars
