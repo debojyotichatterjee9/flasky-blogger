@@ -3,7 +3,7 @@ import os
 from PIL import Image
 from flaskyBlogger import app, db, bcrypt
 from flask import render_template, url_for, redirect, flash, request
-from flaskyBlogger.custom_modules.forms import RegistrationForm, LoginForm, AccountUpdateForm
+from flaskyBlogger.custom_modules.forms import RegistrationForm, LoginForm, AccountUpdateForm, CreatePostForm
 from flaskyBlogger.models.user_models import User
 from flaskyBlogger.models.post_models import Post
 from flask_login import login_user, current_user, login_required, logout_user
@@ -28,9 +28,16 @@ dummy_data = [
 
 
 @app.route('/')
+def landing():
+    return render_template('./landing/landing.html')
+
+
 @app.route('/home')
+@login_required
 def home():
-    return render_template('./home/home.html', data=dummy_data)
+    list_of_posts = Post.query.all()
+    print(list_of_posts)
+    return render_template('./home/home.html', data=list_of_posts)
 
 # about page
 
@@ -133,3 +140,16 @@ def user_account():
         account_update_form.email.data = current_user.email
     user_avatar = url_for('static',filename='images/avatars/' + current_user.avatar)
     return render_template('./user_account/user_account.html', title='User Account', avatar=user_avatar, form=account_update_form)
+
+
+@app.route('/post/create-post', methods=["GET", "POST"])
+@login_required
+def create_post():
+    create_post_form = CreatePostForm()
+    if create_post_form.validate_on_submit():
+        new_post = Post(title=create_post_form.title.data, content=create_post_form.content.data, author=current_user)
+        db.session.add(new_post)
+        db.session.commit()
+        flash('Published successfully!', 'success')
+        return redirect(url_for('home'))
+    return render_template('./post/create_post.html', title='New Post', form=create_post_form)

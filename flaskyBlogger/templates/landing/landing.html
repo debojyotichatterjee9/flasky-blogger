@@ -1,0 +1,19 @@
+{% extends "./layout/layout.html" %}
+
+    {% block content %}
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  
+  <main class="px-3">
+    <h1>Flasky Blgger.</h1>
+    <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+    <p class="lead">
+      <a class="btn btn-lg btn-primary fw-bold" href="{{url_for('login')}}">Get started</a>
+    </p>
+  </main>
+</div>
+    {% endblock content %}
+<!-- 
+    jinja2 alows you to name the block, 
+    when you are ending the block.
+    This helps to be more explicit to which block you are trying to end
+ -->
