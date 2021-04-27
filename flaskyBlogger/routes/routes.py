@@ -179,3 +179,9 @@ def update_post(post_id):
         update_post_form.title.data = post.title
         update_post_form.content.data = post.content
     return render_template('./post/edit_post.html', title=post.title, post=post, form=update_post_form, legend="Edit your post")
+
+
+@app.route('/post/<int:post_id>/delete', methods=["GET", "POST"])
+@login_required
+def delete_post(post_id):
+    return None
