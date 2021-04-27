@@ -193,3 +193,15 @@ def delete_post(post_id):
     db.session.commit()
     flash(f'{post.title} deleted successfully!', 'danger')
     return redirect(url_for('home'))
+
+
+
+@app.route('/posts/<string:username>')
+@login_required
+def user_posts(username):
+    requested_page = request.args.get('page', 1, type=int)
+    user_info = User.query.filter_by(username=username).first_or_404()
+    list_of_posts = Post.query.filter_by(author=user_info).\
+        order_by(Post.date.desc()).\
+        paginate(page=requested_page, per_page=2)
+    return render_template('./post/user_posts.html', posts=list_of_posts, user=user_info)
