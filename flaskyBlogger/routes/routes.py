@@ -38,7 +38,7 @@ def landing():
 @login_required
 def home():
     requested_page = request.args.get('page', 1, type=int)
-    list_of_posts = Post.query.paginate(page=requested_page, per_page=2)
+    list_of_posts = Post.query.order_by(Post.date.desc()).paginate(page=requested_page, per_page=2)
     return render_template('./home/home.html', posts=list_of_posts)
 
 # about page
