@@ -93,7 +93,7 @@ def login():
             # checking if a param exists for a existing secured page in the application
             next_page = request.args.get('next')
 
-            flash(f'Welcome {login_form.email.data}!', 'success')
+            flash(f'Welcome {current_user.first_name}!', 'success')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash(f'Please check the email or password!', 'danger')

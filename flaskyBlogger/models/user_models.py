@@ -1,6 +1,9 @@
-from flaskyBlogger import db, login_manager
+from flaskyBlogger import db, login_manager, app
 from datetime import datetime
 from flask_login import UserMixin
+
+from itsdangerous import TimedJSONWebSignatureSerializer as TJSONSerializer
+
 
 
 @login_manager.user_loader
@@ -16,6 +19,20 @@ class User(db.Model, UserMixin):
     avatar = db.Column(db.String(20), nullable=False, default='default_avatar.png')
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
+
+    def generate_token(self, exp_in_secs=1800):
+        s = TJSONSerializer(app.config['SECRET_KEY'], exp_in_secs)
+        token = s.dumps({'user_id': se;f.id}).decode('utf-8')
+        return token
+
+    @staticmethod
+    def validate_token(token):
+        s = TJSONSerializer(app.config['SECRET_KEY'])
+        try:
+            user_id = s.loads(token)['user_id']
+        except:
+            return None
+        return User.query.get(user_id)
 
     # dunder method or called magic method
     def __repr__(self):
