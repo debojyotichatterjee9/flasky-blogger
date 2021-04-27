@@ -103,7 +103,7 @@ class AccountUpdateForm(FlaskForm):
                 raise ValidationError('Email already exists!')
 
 
-class CreatePostForm(FlaskForm):
+class EditPostForm(FlaskForm):
     title = StringField('Title',
                         validators=[
                             DataRequired(),
