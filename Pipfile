@@ -13,6 +13,7 @@ flask-login = "*"
 pillow = "*"
 itsdangerous = "*"
 flask-mail = "*"
+gunicorn = "*"
 
 [dev-packages]
 autopep8 = "*"
