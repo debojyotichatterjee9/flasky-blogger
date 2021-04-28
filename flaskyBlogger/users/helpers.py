@@ -1,7 +1,8 @@
 import os
 import secrets
 from PIL import Image
-from flaskyBlogger import app
+from flask import current_app
+from flaskyBlogger import mail
 from flask import url_for
 from flask_mail import Message
 
@@ -10,7 +11,7 @@ def upload_avatar(image_data):
     _, file_ext = os.path.splitext(image_data.filename)
     file_name = random_hex + file_ext
     avatar_path = os.path.join(
-        app.root_path, "static/images/avatars", file_name)
+        current_app.root_path, "static/images/avatars", file_name)
 
     # resizing image
     output_size = (125, 125)

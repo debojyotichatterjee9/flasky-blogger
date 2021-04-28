@@ -1,4 +1,5 @@
-from flaskyBlogger import app, db, bcrypt, mail
+from flask import current_app
+from flaskyBlogger import db, bcrypt
 from flask import render_template, url_for, redirect, flash, request, Blueprint
 from flaskyBlogger.users.forms import (RegistrationForm, LoginForm, AccountUpdateForm, 
                                                 PasswordResetRequestForm, PasswordResetForm)

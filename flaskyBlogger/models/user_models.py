@@ -1,4 +1,5 @@
-from flaskyBlogger import db, login_manager, app
+from flask import current_app
+from flaskyBlogger import db, login_manager
 from datetime import datetime
 from flask_login import UserMixin
 
@@ -21,13 +22,13 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', backref='author', lazy=True)
 
     def generate_token(self, exp_in_secs=1800):
-        s = TJSONSerializer(app.config['SECRET_KEY'], exp_in_secs)
+        s = TJSONSerializer(current_app.config['SECRET_KEY'], exp_in_secs)
         token = s.dumps({'user_id': self.id}).decode('utf-8')
         return token
 
     @staticmethod
     def validate_token(token):
-        s = TJSONSerializer(app.config['SECRET_KEY'])
+        s = TJSONSerializer(current_app.config['SECRET_KEY'])
         try:
             user_id = s.loads(token)['user_id']
         except:
