@@ -217,4 +217,25 @@ def reset_request():
 
     password_reset_form = PasswordResetRequestForm()
 
+    if password_reset_form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data)
+
     return render_template('./user_account/password_reset_request.html', title="Reset Request", form=password_reset_form)
+
+
+
+@app.route('/reset-password/<string:token>', methods=["GET", "POST"])
+def reset_password(token):
+    #  redirect to home if logged in
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    # validating the user
+    user_info = User.validate_token(token)
+
+    if user_info is None:
+        flash('Invalid or expired token!', 'warning')
+        return redirect(url_for('reset_request'))
+
+    password_reset_form = PasswordResetForm()
+
+    return render_template('./user_account/password_reset.html', title="Reset Password", form=password_reset_form)
