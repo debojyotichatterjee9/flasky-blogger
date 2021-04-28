@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from flaskyBlogger.models.user_models import User
 from flask_login import current_user
+from flaskyBlogger.models.user_models import User
 
 
 class RegistrationForm(FlaskForm):
@@ -85,9 +85,9 @@ class AccountUpdateForm(FlaskForm):
                             Email()
                         ])
     avatar = FileField('Avatar',
-                        validators=[
-                            FileAllowed(['jpg', 'jpeg', 'png']),
-                        ])
+                       validators=[
+                           FileAllowed(['jpg', 'jpeg', 'png']),
+                       ])
     submit = SubmitField('Update')
 
     def validate_username(self, username):
@@ -103,20 +103,6 @@ class AccountUpdateForm(FlaskForm):
                 raise ValidationError('Email already exists!')
 
 
-class EditPostForm(FlaskForm):
-    title = StringField('Title',
-                        validators=[
-                            DataRequired(),
-                            Length(min=2, max=100)
-                        ])
-    content = TextAreaField('Content',
-                        validators=[
-                            DataRequired(),
-                            Length(min=2, max=1000)
-                        ])
-    submit = SubmitField('Publish')
-
-
 class PasswordResetRequestForm(FlaskForm):
     email = StringField('Email',
                         validators=[
@@ -128,8 +114,8 @@ class PasswordResetRequestForm(FlaskForm):
     def validate_email(self, email):
         user_info = User.query.filter_by(email=email.data).first()
         if user_info is None:
-            raise ValidationError('There is no account with the email. Please Register and Login to continue.')
-
+            raise ValidationError(
+                'There is no account with the email. Please Register and Login to continue.')
 
 
 class PasswordResetForm(FlaskForm):

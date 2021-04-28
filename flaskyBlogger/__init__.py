@@ -14,7 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'warning'
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 587
@@ -25,7 +25,16 @@ app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASSWORD')
 mail = Mail(app)
 
 
-from flaskyBlogger.routes import routes
+# from flaskyBlogger.routes import routes
+
+from flaskyBlogger.main.routes import main
+from flaskyBlogger.users.routes import users
+from flaskyBlogger.posts.routes import posts
+
+# registering the blueprints
+app.register_blueprint(main)
+app.register_blueprint(users)
+app.register_blueprint(posts)
 
 print(app.config['MAIL_USERNAME'])
 print(app.config['MAIL_PASSWORD'])
