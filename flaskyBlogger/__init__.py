@@ -22,8 +22,7 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(Config)
     
-    print(app.config['MAIL_USERNAME'])
-    print(app.config['MAIL_PASSWORD'])
+    print(app.config)
     
     db.init_app(app)
     bcrypt.init_app(app)
