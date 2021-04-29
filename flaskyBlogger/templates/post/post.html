@@ -8,8 +8,8 @@
                     <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
                     <code class="text-muted">{{ post.date.strftime('%Y-%m-%d') }}</code>
                     {% if post.author == current_user %}
-                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('posts.update_post', post_id=post.id) }}">Update</a>
-                        <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('posts.update_post', post_id=post.id) }}"><i class="bi bi-pencil-square"></i></a>
+                        <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash-fill"></i></button>
                     {% endif %}
                 </div>
                 <h2 class="article-title">{{ post.title }}</h2>

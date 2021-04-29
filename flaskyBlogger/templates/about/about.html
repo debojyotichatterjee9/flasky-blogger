@@ -1,8 +1,14 @@
 {% extends "./layout/layout.html" %}
 
-    {% block content %}
-        <h1>About Page!!</h1>
-    {% endblock content %}
+{% block content %}
+<h2>About Flask</h2>
+  <p class="lead">Flask is a micro web framework written in Python. 
+      It is classified as a microframework because it does not require particular tools or libraries.</p>
+    <p class="lead"> It has no database abstraction layer, form validation, or any other components 
+        where pre-existing third-party libraries provide common functions.</p>
+    <code>You can find the documentation here: <a href="https://flask.palletsprojects.com/en/1.1.x/" target="_blank">Flask Documentation</a></code>
+</div>
+{% endblock content %}
 <!-- 
     jinja2 alows you to name the block, 
     when you are ending the block.

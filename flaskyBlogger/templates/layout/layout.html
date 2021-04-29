@@ -9,6 +9,7 @@
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/main.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    {% block head %}{% endblock %}
     {% if title %}
     <title>Flasky | {{title}}</title>
     {% else %}
@@ -21,7 +22,7 @@
     <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <div class="container">
-                <a class="navbar-brand mr-4" href="/">Flasky Blogger</a>
+                <a class="navbar-brand mr-4" href="/"><i class="bi bi-egg-fried"></i> Flasky Blogger</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
                     aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -71,15 +72,31 @@
             {% if current_user.is_authenticated %}
                 <div class="col-md-4">
                     <div class="content-section">
-                        <h3>The Sidebar</h3>
-                        <p class='text-muted'>You can put any information here you'd like.
+                        <!-- <h3>The Sidebar</h3> -->
+                        <!-- <p class='text-muted'>You can put any information here you'd like.
                         <ul class="list-group">
                             <li class="list-group-item list-group-item-light">Latest Posts</li>
                             <li class="list-group-item list-group-item-light">Announcements</li>
                             <li class="list-group-item list-group-item-light">Calendars</li>
                             <li class="list-group-item list-group-item-light">etc</li>
                         </ul>
-                        </p>
+                        </p> -->
+                        <div class="card" style="width: 20rem;">
+                            <img class="card-img-top" src="{{url_for('static', filename='/images/js_logo.png')}}" alt="Could not load the image">
+                            <div class="card-body">
+                              <h5 class="card-title">Learn Javascript!</h5>
+                              <p class="card-text"> How do you comfort a JavaScript bug? You console it.</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item">Don't trust JavaScript programmers.</li>
+                              <li class="list-group-item">All they do is promises but they never callback.</li>
+                              <li class="list-group-item">Follow the link below if you're interested.</li>
+                            </ul>
+                            <div class="card-body">
+                              <a href="https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/README.md" class="card-link" target="_blank">Read it</a>
+                              <a href="https://www.amazon.com/You-Dont-Know-Set-Volumes/dp/9352136268" class="card-link" target="_blank">Buy it</a>
+                            </div>
+                          </div>
                     </div>
                 </div>
             {% endif %}

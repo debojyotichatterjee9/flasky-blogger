@@ -1,17 +1,19 @@
 {% extends "./layout/layout.html" %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/landing.css') }}">
 
-    {% block content %}
-        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  
-  <main class="px-3">
-    <h1>Flasky Blgger.</h1>
-    <p class="lead">Sample Flask Application</p>
-    <p class="lead">
-      <a class="btn btn-lg btn-primary fw-bold" href="{{url_for('users.login')}}">Get started</a>
-    </p>
-  </main>
-</div>
-    {% endblock content %}
+{% endblock %}
+{% block content %}
+    <h2><i class="bi bi-egg-fried"></i> Flasky Blogger</h2>
+      <p class="lead">Sample Flask Application for demonstrating various features like templates, 
+        authentication, forms and validation, pagination etc.</p>
+        <p class="lead">This application is deployed on Heroku with postgresql addon.</p>
+        <code>You can find the codebse for this on Github here: <a href="https://github.com/debojyotichatterjee9/flasky-blogger" target="_blank">Flasky Blogger</a></code>
+      <p class="lead mt-4">
+        <a class="btn btn-lg btn-primary fw-bold" href="{{url_for('users.login')}}">Get started</a>
+      </p>
+  </div>
+{% endblock content %}
 <!-- 
     jinja2 alows you to name the block, 
     when you are ending the block.
