@@ -14,6 +14,7 @@ pillow = "*"
 itsdangerous = "*"
 flask-mail = "*"
 gunicorn = "*"
+psycopg2 = "2.4.4"
 
 [dev-packages]
 autopep8 = "*"
